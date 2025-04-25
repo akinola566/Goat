@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FavBoostX - Aviator Data</title>
+  <style>
+    body {
+      background: #111;
+      color: #f54291;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    .card {
+      background: #1e1e1e;
+      margin: 15px auto;
+      padding: 20px;
+      max-width: 500px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #f54291;
+    }
+    h1, h2 {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <h1>FavBoostX</h1>
+  <h2>Latest Aviator Multipliers</h2>
+
+  <div class="card" id="results">Loading...</div>
+
+  <script>
+    fetch('results.json')
+      .then(res => res.json())
+      .then(data => {
+        const box = document.getElementById('results');
+        const html = `
+          <p><strong>Updated:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
+          <p><strong>Last 30 Rounds:</strong></p>
+          <p>${data.multipliers.join(' | ')}</p>
+        `;
+        box.innerHTML = html;
+      })
+      .catch(() => {
+        document.getElementById('results').innerText = 'Could not load multipliers.';
+      });
+  </script>
+</body>
+</html>
